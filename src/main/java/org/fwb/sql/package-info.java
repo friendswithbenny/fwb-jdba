@@ -6,7 +6,4 @@ package org.fwb.sql;
  * however, it is generic for the sake of:
  *   string-serializer subclasses StringRecordList and StringRecordMap and
  *   consumers with knowledge of additional constraints on the types of a ResultSet's fields.
- * 
- * @see https://github.com/friendswithbenny/jql
- * @author friendswithbenny@gmail.com
  */

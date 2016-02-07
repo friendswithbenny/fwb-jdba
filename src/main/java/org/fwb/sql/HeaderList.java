@@ -7,17 +7,23 @@ import java.util.AbstractList;
 import java.util.Set;
 
 /**
- * bridging java.sql.ResultSetMetaData with java.util.List&lt;String>
+ * bridging jdbc ResultSetMetaData with collections List&lt;String>
+ * 
+ * TODO warning, this breaks the contract of {@link Set} if there are duplicate column titles.
  */
 public class HeaderList extends AbstractList<String> implements Set<String> {
-	public final ResultSetMetaData RSMD;
+	final ResultSetMetaData RSMD;
 	
 	public HeaderList(ResultSet rs) throws SQLException {
 		this(rs.getMetaData());
 	}
 	
 	public HeaderList(ResultSetMetaData rsmd) {
-		this.RSMD = rsmd;
+		RSMD = rsmd;
+	}
+	
+	public ResultSetMetaData getMetaData() {
+		return RSMD;
 	}
 	
 	@Override
