@@ -6,16 +6,15 @@ import java.sql.SQLException;
 import java.util.AbstractList;
 import java.util.Set;
 
+
 /**
  * bridging jdbc ResultSetMetaData with collections List&lt;String>
- * 
- * TODO warning, this breaks the contract of {@link Set} if there are duplicate column titles.
  */
-public class HeaderList extends AbstractList<String> implements Set<String> {
+public class HeaderList extends AbstractList<String> {
 	final ResultSetMetaData RSMD;
 	
-	public HeaderList(ResultSet rs) throws SQLException {
-		this(rs.getMetaData());
+	public HeaderList(ResultSet rs) {
+		this(getMetaData(rs));
 	}
 	
 	public HeaderList(ResultSetMetaData rsmd) {
@@ -38,9 +37,48 @@ public class HeaderList extends AbstractList<String> implements Set<String> {
 	@Override
 	public String get(int i) {
 		try {
-			return RSMD.getColumnLabel(i+1);
+			return RSMD.getColumnLabel(1 + i);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		}
+	}
+	
+	public static ResultSetMetaData getMetaData(ResultSet rs) {
+		try {
+			return rs.getMetaData();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	/**
+	 * @deprecated this breaks the contract of {@link Set} if given non-unique field names.
+	 */
+	public static class HeaderSet extends HeaderList implements Set<String> {
+		public HeaderSet(ResultSet rs) {
+			this(getMetaData(rs));
+		}
+		public HeaderSet(ResultSetMetaData rsmd) {
+			super(rsmd);
+			
+			// TODO requires fwb-collection-utils
+//			SetView.checkUnique(this);
+		}
+	}
+	
+	/** TODO it's just lazy to extend HeaderList; semantically it's incorrect */
+	public static class HeaderTypeList extends HeaderList {
+		public HeaderTypeList(ResultSetMetaData rsmd) {
+			super(rsmd);
+		}
+		
+		@Override
+		public String get(int i) {
+			try {
+				return RSMD.getColumnTypeName(1 + i);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 }

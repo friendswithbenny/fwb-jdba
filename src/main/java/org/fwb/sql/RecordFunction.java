@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import org.fwb.sql.RecordList.StringRecordList;
 
 /**
- * bridging java.sql.ResultSet with com.google.common.base.Function
+ * bridging jdbc {@link ResultSet} with guava {@link Function}.
+ * 
+ * this is the canonical bridge to the {@link ResultSet#getObject(String)} method.
  */
 public class RecordFunction<T> implements Function<String, T> {
 	public final ResultSet RS;
@@ -22,16 +24,15 @@ public class RecordFunction<T> implements Function<String, T> {
 	@Override
 	public T apply(String input) throws ClassCastException, RuntimeException {
 		try {
-			return (T) RS.getObject((String) input);
+			return (T) RS.getObject(input);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
-	/* STATIC */
 	/**
-	 * using jdbc's getString(_) method to fetch Strings from the db
-	 * (rather than getObject(_).toString() for instance).
+	 * using jdbc's {@link ResultSet#getString(String)} method to fetch Strings from the db
+	 * (rather than {@link ResultSet#getObject(int)} and {@link Object#toString()} for instance).
 	 */
 	public static class StringRecordFunction extends RecordFunction<String> {
 		public StringRecordFunction(ResultSet rs) {
@@ -46,14 +47,16 @@ public class RecordFunction<T> implements Function<String, T> {
 				throw new RuntimeException(e);
 			}
 		}
-		
-		/**
-		 * this alternative approach
-		 * uses {@link ResultSet#getObject(int)}.{@link Object#toString()}
-		 * instead of {@link ResultSet#getString(int)}
-		 */
-		public static Function<String, String> toStringRecordFunction(ResultSet rs) {
-			return Functions.compose(StringRecordList.TO_STRING, new RecordFunction<Object>(rs));
-		}
+	}
+	
+	/**
+	 * this alternative approach
+	 * uses {@link ResultSet#getObject(int)}.{@link Object#toString()}
+	 * instead of {@link ResultSet#getString(int)}.
+	 * 
+	 * prefer {@link StringRecordFunction} instead.
+	 */
+	public static Function<String, String> toStringRecordFunction(ResultSet rs) {
+		return Functions.compose(StringRecordList.TO_STRING, new RecordFunction<Object>(rs));
 	}
 }

@@ -12,11 +12,6 @@ import com.google.common.collect.Lists;
 /**
  * bridging java.sql.ResultSet with java.util.List,
  * this delegates to {@link ResultSet#getObject(int)}.
- *
- * note: it would be trivial to implement this class 
- *	 "Maps.asMap(new HeaderList(rs), new RecordFunction(rs))"
- *	 this explicit implementation uses ResultSet.getObject(int) to avoid
- *	 the possible performance hit associated with ResultSet.getObject(String)
  */
 public class RecordList<T> extends AbstractList<T> implements RandomAccess {
 	final ResultSet RS;
@@ -50,9 +45,8 @@ public class RecordList<T> extends AbstractList<T> implements RandomAccess {
 	
 	/**
 	 * this alternative approach uses HeaderList, RecordFunction, and Lists.transform.
-	 * the distinction is a possible performance hit associated with ResultSet.getObject(String)
-	 * rather than the nominally higher-performance ResultSet.getObject(int)
-	 * @throws SQLException 
+	 * the distinction is a possible performance hit associated with {@link ResultSet#getObject(String)}
+	 * rather than the nominally higher-performance {@link ResultSet#getObject(int)}
 	 */
 	public static <T> List<T> recordFunctionList(ResultSet rs) throws SQLException {
 		return Lists.transform(new HeaderList(rs), new RecordFunction<T>(rs));
