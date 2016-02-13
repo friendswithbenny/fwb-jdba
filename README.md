@@ -1,4 +1,6 @@
-bridging java's relational API (jdbc) with other, namely algebraic APIs (collections, functions)
+# Java DataBase Extension
+
+bridging java's relational API (jdbc) with other, namely algebraic APIs (collections, guava functions)
 
 wraps instances of java.sql.ResultSet in sensible implementations of:
 

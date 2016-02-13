@@ -4,23 +4,29 @@
 
 	<groupId>org.fwb</groupId>
 	<!-- TODO should probably be renamed from 'jql' to 'fwb-sql' -->
-	<artifactId>jql</artifactId>
+	<artifactId>fwb-jdbx</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.1-SNAPSHOT</version>
 	
-	<name>jql</name>
-	<url>https://github.com/friendswithbenny/jql</url>
+	<name>fwb-jdbx</name>
+	<url>https://github.com/friendswithbenny/fwb-jdbx</url>
 	
 	<!-- TODO test this
 	<scm>
-		<url>https://github.com/friendswithbenny/jql</url>
+		<url>https://github.com/friendswithbenny/fwb-jdbx</url>
 
-		<connection>scm:git:git@github.com:friendswithbenny/jql.git</connection>
-		<developerConnection>scm:git:git@github.com:friendswithbenny/jql.git</developerConnection>
+		<connection>scm:git:git@github.com:friendswithbenny/fwb-jdbx.git</connection>
+		<developerConnection>scm:git:git@github.com:friendswithbenny/fwb-jdbx.git</developerConnection>
 	</scm>
 	-->
 
 	<dependencies>
+		<dependency>
+			<groupId>org.fwb</groupId>
+			<artifactId>fwb-alj</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>

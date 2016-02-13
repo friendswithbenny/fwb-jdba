@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import java.util.AbstractList;
 import java.util.Set;
 
+import org.fwb.collection.Sets2.NonDistinctException;
+
 
 /**
- * bridging jdbc ResultSetMetaData with collections List&lt;String>
+ * bridging jdbc {@link ResultSetMetaData} with collections {@link List}
  */
 public class HeaderList extends AbstractList<String> {
 	final ResultSetMetaData RSMD;
@@ -52,17 +54,18 @@ public class HeaderList extends AbstractList<String> {
 	}
 	
 	/**
-	 * @deprecated this breaks the contract of {@link Set} if given non-unique field names.
+	 * for ResultSets with distinct column names
 	 */
 	public static class HeaderSet extends HeaderList implements Set<String> {
 		public HeaderSet(ResultSet rs) {
 			this(getMetaData(rs));
 		}
-		public HeaderSet(ResultSetMetaData rsmd) {
+		/**
+		 * @throws NonDistinctException if two fields (columns) have the same name (title)
+		 */
+		public HeaderSet(ResultSetMetaData rsmd) throws NonDistinctException {
 			super(rsmd);
-			
-			// TODO requires fwb-collection-utils
-//			SetView.checkUnique(this);
+			NonDistinctException.checkUnique(this);
 		}
 	}
 	
