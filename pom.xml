@@ -4,19 +4,19 @@
 
 	<groupId>org.fwb</groupId>
 	<!-- TODO should probably be renamed from 'jql' to 'fwb-sql' -->
-	<artifactId>fwb-jdbx</artifactId>
+	<artifactId>fwb-jdba</artifactId>
 	<packaging>jar</packaging>
 	<version>1.1-SNAPSHOT</version>
 	
-	<name>fwb-jdbx</name>
-	<url>https://github.com/friendswithbenny/fwb-jdbx</url>
+	<name>jdba</name>
+	<url>https://github.com/friendswithbenny/fwb-jdba</url>
 	
 	<!-- TODO test this
 	<scm>
-		<url>https://github.com/friendswithbenny/fwb-jdbx</url>
+		<url>https://github.com/friendswithbenny/fwb-jdba</url>
 
-		<connection>scm:git:git@github.com:friendswithbenny/fwb-jdbx.git</connection>
-		<developerConnection>scm:git:git@github.com:friendswithbenny/fwb-jdbx.git</developerConnection>
+		<connection>scm:git:git@github.com:friendswithbenny/fwb-jdba.git</connection>
+		<developerConnection>scm:git:git@github.com:friendswithbenny/fwb-jdba.git</developerConnection>
 	</scm>
 	-->
 
