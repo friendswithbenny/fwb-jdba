@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.AbstractList;
 import java.util.Set;
 
-import org.fwb.collection.Sets2.NonDistinctException;
+import org.fwb.alj.col.SetUtil.NonDistinctException;
 
 
 /**
