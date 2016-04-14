@@ -69,7 +69,7 @@ public class HeaderList extends AbstractList<String> {
 		}
 	}
 	
-	/** TODO it's just lazy to extend HeaderList; semantically it's incorrect */
+	/** @deprecated TODO it's just lazy to extend HeaderList; semantically it's incorrect */
 	public static class HeaderTypeList extends HeaderList {
 		public HeaderTypeList(ResultSetMetaData rsmd) {
 			super(rsmd);
@@ -79,6 +79,20 @@ public class HeaderList extends AbstractList<String> {
 		public String get(int i) {
 			try {
 				return RSMD.getColumnTypeName(1 + i);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+	public static class HeaderTableList extends HeaderList {
+		public HeaderTableList(ResultSetMetaData rsmd) {
+			super(rsmd);
+		}
+		
+		@Override
+		public String get(int i) {
+			try {
+				return RSMD.getTableName(1 + i);
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
