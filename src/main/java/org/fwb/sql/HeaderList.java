@@ -84,6 +84,7 @@ public class HeaderList extends AbstractList<String> {
 			}
 		}
 	}
+	/** @deprecated TODO it's just lazy to extend HeaderList; semantically it's incorrect */
 	public static class HeaderTableList extends HeaderList {
 		public HeaderTableList(ResultSetMetaData rsmd) {
 			super(rsmd);
